@@ -30,7 +30,7 @@ app.use(limiter);
 // CORS
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://connectify-social-azure.vercel.app"],
     credentials: true,
   })
 );
