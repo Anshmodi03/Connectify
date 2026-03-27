@@ -42,6 +42,9 @@ app.use(express.urlencoded({ extended: true }));
 // Serve uploaded files as static assets
 app.use("/assets", express.static(path.join(__dirname, "uploads")));
 
+// Health check (for UptimeRobot / load balancers)
+app.get("/api/health", (_req, res) => res.status(200).json({ status: "ok" }));
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
