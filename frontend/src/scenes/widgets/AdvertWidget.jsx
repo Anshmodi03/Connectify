@@ -31,10 +31,10 @@ const AdvertWidget = () => {
         sx={{
           width: "100%",
           height: "160px",
-          borderRadius: "12px",
+          borderRadius: "10px",
           mb: "0.85rem",
-          background: "linear-gradient(135deg, rgba(94,106,210,0.2), rgba(225,29,72,0.2))",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "#1A1A28",
+          border: "1px solid rgba(255,255,255,0.07)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

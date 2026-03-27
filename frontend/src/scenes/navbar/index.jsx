@@ -10,19 +10,20 @@ import {
   useTheme,
   useMediaQuery,
   Tooltip,
+  Avatar,
 } from "@mui/material";
 import {
   Search,
   Message,
-  DarkMode,
-  LightMode,
   Notifications,
   Help,
   Menu,
   Close,
+  LogoutOutlined,
+  PersonOutlined,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "state";
+import { setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -37,80 +38,85 @@ const Navbar = () => {
   const fullName = user ? `${user.firstName} ${user.lastName}` : "";
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  const { neutral } = theme.palette;
+  const { neutral, primary, divider } = theme.palette;
 
   useGSAP(() => {
     gsap.from(navRef.current, {
-      y: -80,
+      y: -60,
       opacity: 0,
-      duration: 0.7,
+      duration: 0.55,
       ease: "power3.out",
     });
   }, []);
 
-  const iconSx = {
-    color: neutral.dark,
-    transition: "color 0.2s ease, transform 0.2s ease",
-    "&:hover": { color: theme.palette.primary.main, transform: "scale(1.1)" },
+  const iconBtnSx = {
+    color: neutral.main,
+    transition: "color 0.2s ease, background 0.2s ease",
+    "&:hover": {
+      color: neutral.dark,
+      background: "rgba(255,255,255,0.06)",
+    },
   };
 
-  const commonMenu = (
+  const navActions = (
     <>
-      <Tooltip title="Toggle Dark/Light Mode" arrow>
-        <IconButton onClick={() => dispatch(setMode())} sx={iconSx}>
-          {theme.palette.mode === "dark" ? (
-            <DarkMode sx={{ fontSize: "22px" }} />
-          ) : (
-            <LightMode sx={{ fontSize: "22px" }} />
-          )}
-        </IconButton>
-      </Tooltip>
-
       <Tooltip title="Messages" arrow>
-        <IconButton sx={iconSx}>
-          <Message sx={{ fontSize: "22px" }} />
+        <IconButton sx={iconBtnSx}>
+          <Message sx={{ fontSize: "20px" }} />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Notifications" arrow>
-        <IconButton sx={iconSx}>
-          <Notifications sx={{ fontSize: "22px" }} />
+        <IconButton sx={iconBtnSx}>
+          <Notifications sx={{ fontSize: "20px" }} />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Help" arrow>
-        <IconButton sx={iconSx}>
-          <Help sx={{ fontSize: "22px" }} />
+        <IconButton sx={iconBtnSx}>
+          <Help sx={{ fontSize: "20px" }} />
         </IconButton>
       </Tooltip>
 
-      <FormControl variant="standard" value={fullName}>
+      <FormControl variant="standard">
         <Select
           value={fullName}
           sx={{
-            background: "rgba(255,255,255,0.06)",
-            border: `1px solid ${theme.palette.divider}`,
+            background: "rgba(255,255,255,0.05)",
+            border: `1px solid ${divider}`,
             width: "160px",
             px: 1.5,
             py: 0.5,
             borderRadius: "10px",
             color: neutral.dark,
+            fontSize: "13px",
+            fontWeight: 500,
             ".MuiSvgIcon-root": { color: neutral.medium },
-            "&:hover": { background: "rgba(255,255,255,0.1)" },
+            "&:hover": { background: "rgba(255,255,255,0.08)", borderColor: "rgba(255,255,255,0.15)" },
+            transition: "all 0.2s ease",
           }}
           input={<InputBase />}
         >
-          <MenuItem value={fullName}>
-            <Typography fontSize="13px" fontWeight={500}>
-              {fullName}
-            </Typography>
+          <MenuItem value={fullName} sx={{ fontSize: "13px", fontWeight: 500 }}>
+            {fullName}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate(`/profile/${user?._id}`);
+            }}
+            sx={{ fontSize: "13px", gap: "0.5rem" }}
+          >
+            <PersonOutlined sx={{ fontSize: "16px" }} />
+            Profile
           </MenuItem>
           <MenuItem
             onClick={() => {
               dispatch(setLogout());
               navigate("/login");
             }}
+            sx={{ fontSize: "13px", color: theme.palette.secondary.main, gap: "0.5rem" }}
           >
+            <LogoutOutlined sx={{ fontSize: "16px" }} />
             Log Out
           </MenuItem>
         </Select>
@@ -125,12 +131,12 @@ const Navbar = () => {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        background: "rgba(10,10,15,0.85)",
-        borderBottom: `1px solid ${theme.palette.divider}`,
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        background: "rgba(9,9,14,0.88)",
+        borderBottom: `1px solid ${divider}`,
         px: { xs: "4%", md: "6%" },
-        py: "0.75rem",
+        py: "0.65rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -140,34 +146,32 @@ const Navbar = () => {
       <FlexBetween gap="1.5rem">
         <Typography
           fontWeight={700}
-          fontSize="clamp(1rem, 2vw, 1.6rem)"
+          fontSize="clamp(1rem, 2vw, 1.4rem)"
+          onClick={() => navigate("/home")}
           sx={{
             cursor: "pointer",
-            background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            letterSpacing: "-0.5px",
-            "&:hover": { opacity: 0.85 },
-            transition: "opacity 0.2s ease",
+            color: primary.main,
+            letterSpacing: "-0.3px",
+            userSelect: "none",
+            "&:hover": { color: primary.light },
+            transition: "color 0.2s ease",
           }}
-          onClick={() => navigate("/home")}
         >
-          SocialPulse
+          Connectify
         </Typography>
 
         {isNonMobileScreens && (
           <FlexBetween
             sx={{
-              background: "rgba(255,255,255,0.05)",
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: "12px",
-              px: "1.25rem",
-              py: "0.4rem",
+              background: "rgba(255,255,255,0.04)",
+              border: `1px solid ${divider}`,
+              borderRadius: "10px",
+              px: "1rem",
+              py: "0.45rem",
               gap: "0.5rem",
               "&:focus-within": {
-                border: `1px solid ${theme.palette.primary.main}`,
-                background: "rgba(94,106,210,0.08)",
+                border: `1px solid ${primary.main}`,
+                background: "rgba(94,106,210,0.06)",
               },
               transition: "all 0.2s ease",
             }}
@@ -176,26 +180,21 @@ const Navbar = () => {
               placeholder="Search..."
               sx={{
                 color: neutral.dark,
-                fontSize: "14px",
-                width: "200px",
-                "::placeholder": { color: neutral.medium },
+                fontSize: "13px",
+                width: "190px",
+                "& ::placeholder": { color: neutral.medium },
               }}
             />
-            <IconButton sx={{ p: 0, color: neutral.medium }}>
-              <Search sx={{ fontSize: "20px" }} />
-            </IconButton>
+            <Search sx={{ fontSize: "18px", color: neutral.medium }} />
           </FlexBetween>
         )}
       </FlexBetween>
 
       {/* Right: Actions */}
       {isNonMobileScreens ? (
-        <FlexBetween gap="1rem">{commonMenu}</FlexBetween>
+        <FlexBetween gap="0.75rem">{navActions}</FlexBetween>
       ) : (
-        <IconButton
-          onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-          sx={iconSx}
-        >
+        <IconButton onClick={() => setIsMobileMenuToggled(true)} sx={iconBtnSx}>
           <Menu />
         </IconButton>
       )}
@@ -205,25 +204,41 @@ const Navbar = () => {
         <Box
           sx={{
             position: "fixed",
-            right: 0,
-            top: 0,
-            height: "100%",
-            width: "280px",
+            inset: 0,
             zIndex: 200,
-            background: "rgba(17,17,24,0.97)",
-            backdropFilter: "blur(20px)",
-            borderLeft: `1px solid ${theme.palette.divider}`,
-            p: "1.5rem",
+            display: "flex",
           }}
         >
-          <Box display="flex" justifyContent="flex-end" mb="1.5rem">
-            <IconButton onClick={() => setIsMobileMenuToggled(false)} sx={iconSx}>
-              <Close />
-            </IconButton>
+          {/* Backdrop */}
+          <Box
+            onClick={() => setIsMobileMenuToggled(false)}
+            sx={{ flex: 1, background: "rgba(0,0,0,0.6)" }}
+          />
+          {/* Drawer */}
+          <Box
+            sx={{
+              width: "280px",
+              height: "100%",
+              background: "#0F0F18",
+              borderLeft: `1px solid ${divider}`,
+              p: "1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb="0.5rem">
+              <Typography fontWeight={700} color={primary.main} fontSize="1.1rem">
+                Connectify
+              </Typography>
+              <IconButton onClick={() => setIsMobileMenuToggled(false)} sx={iconBtnSx}>
+                <Close />
+              </IconButton>
+            </Box>
+            <FlexBetween flexDirection="column" alignItems="flex-start" gap="0.5rem">
+              {navActions}
+            </FlexBetween>
           </Box>
-          <FlexBetween flexDirection="column" alignItems="flex-start" gap="1.25rem">
-            {commonMenu}
-          </FlexBetween>
         </Box>
       )}
     </Box>

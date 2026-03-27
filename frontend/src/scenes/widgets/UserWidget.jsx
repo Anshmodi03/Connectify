@@ -3,12 +3,13 @@ import {
   EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
+  AlternateEmail,
+  LinkedIn,
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchUser } from "../../api/api";
@@ -85,57 +86,56 @@ const UserWidget = ({ userId, picturePath }) => {
       <Divider sx={{ borderColor: "rgba(255,255,255,0.08)" }} />
 
       <Box p="1rem 0">
-        <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
-          Social Profiles
+        <Typography fontSize="0.875rem" color={main} fontWeight="600" mb="0.875rem" letterSpacing="0.3px">
+          SOCIAL PROFILES
         </Typography>
-        <FlexBetween gap="1rem" mb="0.5rem">
-          <FlexBetween gap="1rem">
+
+        <FlexBetween mb="0.75rem">
+          <FlexBetween gap="0.75rem">
             <Box
               sx={{
-                width: 32,
-                height: 32,
+                width: 34,
+                height: 34,
                 borderRadius: "8px",
-                background: "rgba(29,161,242,0.15)",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.07)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "16px",
               }}
             >
-              𝕏
+              <AlternateEmail sx={{ fontSize: "16px", color: medium }} />
             </Box>
             <Box>
-              <Typography color={main} fontWeight="500">Twitter</Typography>
+              <Typography color={main} fontWeight="500" fontSize="0.875rem">Twitter / X</Typography>
               <Typography color={medium} fontSize="0.75rem">Social Network</Typography>
             </Box>
           </FlexBetween>
-          <EditOutlined sx={{ color: main, fontSize: "18px" }} />
+          <EditOutlined sx={{ color: medium, fontSize: "16px", cursor: "pointer", "&:hover": { color: main } }} />
         </FlexBetween>
 
-        <FlexBetween gap="1rem">
-          <FlexBetween gap="1rem">
+        <FlexBetween>
+          <FlexBetween gap="0.75rem">
             <Box
               sx={{
-                width: 32,
-                height: 32,
+                width: 34,
+                height: 34,
                 borderRadius: "8px",
-                background: "rgba(10,102,194,0.15)",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.07)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "14px",
-                color: "#0A66C2",
-                fontWeight: 700,
               }}
             >
-              in
+              <LinkedIn sx={{ fontSize: "16px", color: medium }} />
             </Box>
             <Box>
-              <Typography color={main} fontWeight="500">LinkedIn</Typography>
+              <Typography color={main} fontWeight="500" fontSize="0.875rem">LinkedIn</Typography>
               <Typography color={medium} fontSize="0.75rem">Network Platform</Typography>
             </Box>
           </FlexBetween>
-          <EditOutlined sx={{ color: main, fontSize: "18px" }} />
+          <EditOutlined sx={{ color: medium, fontSize: "16px", cursor: "pointer", "&:hover": { color: main } }} />
         </FlexBetween>
       </Box>
     </WidgetWrapper>

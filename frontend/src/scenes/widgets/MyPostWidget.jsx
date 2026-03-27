@@ -181,16 +181,17 @@ const MyPostWidget = ({ picturePath }) => {
           disabled={(!post.trim() && !image) || isSubmitting}
           onClick={handlePost}
           sx={{
-            background: `linear-gradient(135deg, ${palette.primary.main}, ${palette.primary.dark})`,
+            background: palette.primary.main,
             color: "#fff",
             borderRadius: "10px",
             px: "1.5rem",
             py: "0.5rem",
             fontWeight: 600,
             fontSize: "0.85rem",
-            "&:hover": { background: `linear-gradient(135deg, ${palette.primary.light}, ${palette.primary.main})` },
+            minHeight: "36px",
+            "&:hover": { background: palette.primary.dark },
             "&:disabled": { opacity: 0.5 },
-            transition: "all 0.2s ease",
+            transition: "background 0.2s ease",
           }}
         >
           {isSubmitting ? "Posting..." : "Post"}

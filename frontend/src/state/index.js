@@ -10,9 +10,7 @@ const authSlice = createSlice({
     posts: [],
   },
   reducers: {
-    setMode: (state) => {
-      state.mode = state.mode === "light" ? "dark" : "light";
-    },
+    setMode: (_state) => { /* dark mode only — no-op */ },
     setLogin: (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
