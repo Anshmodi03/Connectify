@@ -1,0 +1,140 @@
+ Testing Endpoints with Postman
+User Registration (POST /api/auth/register)
+
+URL: http://localhost:8000/api/auth/register
+
+Method: POST
+
+Body:
+
+Choose raw and select JSON.
+Add the following data:
+json
+Copy code
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+Expected Response:
+
+json
+Copy code
+{
+  "message": "User registered successfully"
+}
+User Login (POST /api/auth/login)
+
+URL: http://localhost:8000/api/auth/login
+
+Method: POST
+
+Body:
+
+Choose raw and select JSON.
+Add the following data:
+json
+Copy code
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+Expected Response:
+
+json
+Copy code
+{
+  "token": "your_jwt_token_here"
+}
+Copy the token from the response for the next steps.
+
+Get User Profile (GET /api/users/profile)
+
+URL: http://localhost:8000/api/users/profile
+Method: GET
+Headers:
+Authorization: Bearer <your_jwt_token_here> (use the token received from the login step).
+Expected Response:
+json
+Copy code
+{
+  "_id": "user_id",
+  "username": "john_doe",
+  "email": "john@example.com",
+  "bio": "",
+  "profilePicture": "",
+  "__v": 0
+}
+Create a Post (POST /api/posts)
+
+URL: http://localhost:8000/api/posts
+
+Method: POST
+
+Headers:
+
+Authorization: Bearer <your_jwt_token_here>
+Body:
+
+Choose raw and select JSON.
+Add the following data:
+json
+Copy code
+{
+  "content": "This is a test post",
+  "image": "https://example.com/image.jpg"
+}
+Expected Response:
+
+json
+Copy code
+{
+  "_id": "post_id",
+  "userId": "user_id",
+  "content": "This is a test post",
+  "image": "https://example.com/image.jpg",
+  "likes": [],
+  "comments": [],
+  "createdAt": "timestamp"
+}
+Like a Post (PUT /api/posts/like/:id)
+
+URL: http://localhost:8000/api/posts/like/<post_id>
+Method: PUT
+Headers:
+Authorization: Bearer <your_jwt_token_here>
+Expected Response:
+json
+Copy code
+{
+  "message": "Post liked"
+}
+Comment on a Post (POST /api/posts/comment/:id)
+
+URL: http://localhost:8000/api/posts/comment/<post_id>
+
+Method: POST
+
+Headers:
+
+Authorization: Bearer <your_jwt_token_here>
+Body:
+
+Choose raw and select JSON.
+Add the following data:
+json
+Copy code
+{
+  "content": "This is a test comment"
+}
+Expected Response:
+
+json
+Copy code
+{
+  "_id": "comment_id",
+  "userId": "user_id",
+  "postId": "post_id",
+  "content": "This is a test comment",
+  "createdAt": "timestamp"
+}
