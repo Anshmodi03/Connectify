@@ -2,3 +2,9 @@ node_modules
 .env
 uploads/*
 !uploads/.gitkeep
+!uploads/post1.jpg
+!uploads/post2.jpg
+!uploads/post3.jpg
+!uploads/post4.jpg
+!uploads/post5.jpg
+!uploads/ad-cosmetics.jpg
